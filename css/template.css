@@ -1,0 +1,14 @@
+
+p.Plight{color:red ;
+            background-color:green;
+        }
+.Pdark{color:white;
+            background-color:grey;
+        }
+div,p{
+    color:grey;
+    background-color: gold;
+}
+#p2{
+    color : orange;
+}
