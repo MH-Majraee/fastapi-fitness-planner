@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>هوش مصنوعی بدنسازی</title>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v3.3.0/Vazirmatn-font-face.css');
+        body { font-family: 'Vazirmatn', Tahoma, sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #0a0a0c; color: #ffffff; }
+        
+        .container { width: 100%; max-width: 500px; background: rgba(20, 20, 25, 0.6); backdrop-filter: blur(20px); padding: 35px; border-radius: 12px; border: 1px solid rgba(0, 243, 255, 0.2); box-shadow: 0 0 25px rgba(0, 243, 255, 0.15); box-sizing: border-box; }
+        
+        h2 { text-align: center; color: #ffffff; margin-bottom: 20px; font-size: 20px; text-shadow: 0 0 10px rgba(0, 243, 255, 0.4); }
+        
+        input, select { display: block; width: 100%; margin-bottom: 15px; padding: 12px; box-sizing: border-box; background: rgba(10, 10, 12, 0.8); border: 1px solid rgba(0, 243, 255, 0.2); color: #ffffff; border-radius: 6px; font-size: 13px; }
+        input:focus, select:focus { outline: none; border-color: #00f3ff; box-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+        ::placeholder { color: #888888; font-size: 12px; }
+        option { background: #121212; color: #ffffff; }
+        
+        button { display: block; width: 100%; background: transparent; color: #00f3ff; border: 1px solid rgba(0, 243, 255, 0.5); padding: 12px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 15px; transition: all 0.3s ease; }
+        button:hover { background: rgba(0, 243, 255, 0.15); border-color: #00f3ff; box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); }
+        
+        .week-btn-container { display: flex; gap: 8px; margin-top: 15px; }
+        .week-btn { margin-top: 0 !important; font-size: 13px !important; padding: 10px !important; }
+        
+        #result, #subResult { margin-top: 20px; font-size: 13px; color: #ffffff; line-height: 1.6; text-align: right; padding: 15px; border-radius: 6px; background: rgba(0, 243, 255, 0.02); border: 1px solid rgba(0, 243, 255, 0.1); max-height: 400px; overflow-y: auto; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        th, td { border: 1px solid rgba(0, 243, 255, 0.2); padding: 8px; text-align: center; }
+        th { background: rgba(0, 243, 255, 0.1); color: #00f3ff; }
+        
+        .step { display: none; }
+        .step.active { display: block; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- پخش‌کننده اتوماتیک موزیک‌های ترند و انرژی‌بخش باشگاهی بدون کنترل دستی -->
+        <audio id="bgMusic" autoplay loop class="hidden"></audio>
+
+        <h2>دریافت برنامه تمرینی</h2>
+        <form id="workoutForm">
+            <div id="step-1" class="step active">
+                <select id="gender" required><option value="" disabled selected>جنسیت</option><option value="مرد">مرد</option><option value="زن">زن</option></select>
+                <input type="number" id="age" placeholder="سن" required>
+                <input type="number" id="weight" placeholder="وزن (کیلوگرم)" step="0.1" required>
+                <input type="number" id="height" placeholder="قد (سانتی‌متر)" step="0.1" required>
+                <button type="button" onclick="nextStep(1)">مرحله بعد</button>
+            </div>
+            <div id="step-2" class="step">
+                <input type="number" id="neck" placeholder="دور گردن (سانتی‌متر)" step="0.1" required>
+                <input type="number" id="chest" placeholder="دور سینه (سانتی‌متر)" step="0.1" required>
+                <input type="number" id="arm" placeholder="دور بازو (سانتی‌متر)" step="0.1" required>
+                <input type="number" id="wrist" placeholder="دور مچ دست (سانتی‌متر)" step="0.1" required>
+                <input type="number" id="waist" placeholder="دور شکم (سانتی‌متر)" step="0.1" required>
+                <input type="number" id="hip" placeholder="دور باسن (سانتی‌متر)" step="0.1" required>
+                <input type="number" id="thigh" placeholder="دور ران (سانتی‌متر)" step="0.1" required>
+                <input type="number" id="ankle" placeholder="دور مچ پا (سانتی‌متر)" step="0.1" required>
+                <button type="button" onclick="nextStep(2)">مرحله بعد</button>
+            </div>
+            <div id="step-3" class="step">
+                <select id="goal" required><option value="" disabled selected>هدف تمرینی</option><option value="عضله‌سازی">عضله‌سازی</option><option value="چربی‌سوزی">چربی‌سوزی</option><option value="افزایش حجم">افزایش حجم</option></select>
+                <input type="number" id="days_per_week" placeholder="تعداد روز تمرین در هفته" required>
+                <select id="experience" required><option value="" disabled selected>سطح تجربه</option><option value="مبتدی">مبتدی</option><option value="متوسط">متوسط</option><option value="حرفه‌ای">حرفه‌ای</option></select>
+                <select id="equipment" required><option value="" disabled selected>تجهیزات</option><option value="باشگاه کامل">باشگاه مجهز</option><option value="دمبل و هالتر خانگی">دمبل و هالتر</option><option value="وزن بدن">وزن بدن</option></select>
+                <select id="activity_level" required><option value="" disabled selected>میزان فعالیت</option><option value="بی‌تحرک">بی‌تحرک</option><option value="متوسط">متوسط</option><option value="بسیار فعال">بسیار فعال</option></select>
+                <input type="number" id="duration" placeholder="زمان هر جلسه (دقیقه)" required>
+                <input type="text" id="injuries" placeholder="آسیب‌دیدگی (یا ندارم)" required>
+                <button type="submit">تولید برنامه</button>
+            </div>
+            <div id="step-4" class="step">
+                <div class="week-btn-container">
+                    <button type="button" class="week-btn" onclick="fetchWorkout(2, 1)">هفته ۲</button>
+                    <button type="button" class="week-btn" onclick="fetchWorkout(3, 1)">هفته ۳</button>
+                    <button type="button" class="week-btn" onclick="fetchWorkout(4, 1)">هفته ۴</button>
+                </div>
+                <div class="week-btn-container" style="margin-top: 8px;">
+                    <button type="button" id="nextPartBtn" class="week-btn hidden" onclick="fetchNextPart()" style="background: rgba(0, 243, 255, 0.2); border-color: #00f3ff;">ادامه برنامه (بخش دوم - شروع از روز ۴)</button>
+                </div>
+                <div style="margin-top: 15px;">
+                    <input type="text" id="exerciseToReplace" placeholder="نام حرکتی که می‌خواهید جایگزین شود...">
+                    <button type="button" onclick="requestSubstitution()">درخواست حرکت جایگزین</button>
+                </div>
+                <button type="button" id="copyBtn" class="hidden" onclick="copyWorkoutPlan()">کپی متن برنامه</button>
+            </div>
+        </form>
+        
+        <!-- جایگاه پیشنهادهای جایگزین -->
+        <div id="subResult" class="hidden"></div>
+        <div id="result"></div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        let rawPlanText = "";
+        let substitutionText = "";
+        let currentWeek = 1;
+        let currentPart = 1;
+        let totalDays = 3;
+        
+        // شیء برای ذخیره و مدیریت هوشمند جایگزین‌ها بر اساس نام حرکت (آپدیت حرکت تکراری، حفظ حرکتهای جدید دیگر)
+        let substitutionsMap = {};
+
+        const gymPlaylist = [
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const audioEle = document.getElementById('bgMusic');
+            function playRandomGymTrack() {
+                const randomIndex = Math.floor(Math.random() * gymPlaylist.length);
+                audioEle.src = gymPlaylist[randomIndex];
+                audioEle.play().catch(e => {
+                    document.body.addEventListener('click', () => { audioEle.play(); }, { once: true });
+                });
+            }
+            playRandomGymTrack();
+            audioEle.addEventListener('ended', playRandomGymTrack);
+        });
+
+        function nextStep(current) {
+            document.getElementById(`step-${current}`).classList.remove('active');
+            document.getElementById(`step-${current + 1}`).classList.add('active');
+        }
+
+        async function fetchWorkout(weekNum, partNum = 1) {
+            currentWeek = weekNum;
+            currentPart = partNum;
+            totalDays = parseInt(document.getElementById('days_per_week').value) || 3;
+
+            // ریست کردن جایگزین‌ها هنگام تعویض هفته یا بخش
+            substitutionText = "";
+            substitutionsMap = {};
+            const subDiv = document.getElementById('subResult');
+            subDiv.innerHTML = "";
+            subDiv.classList.add('hidden');
+            document.getElementById('exerciseToReplace').value = "";
+
+            const userProfile = {
+                age: parseInt(document.getElementById('age').value) || 0,
+                gender: document.getElementById('gender').value,
+                weight: parseFloat(document.getElementById('weight').value) || 0,
+                height: parseFloat(document.getElementById('height').value) || 0,
+                neck: parseFloat(document.getElementById('neck').value) || 0,
+                chest: parseFloat(document.getElementById('chest').value) || 0,
+                arm: parseFloat(document.getElementById('arm').value) || 0,
+                wrist: parseFloat(document.getElementById('wrist').value) || 0,
+                waist: parseFloat(document.getElementById('waist').value) || 0,
+                hip: parseFloat(document.getElementById('hip').value) || 0,
+                thigh: parseFloat(document.getElementById('thigh').value) || 0,
+                ankle: parseFloat(document.getElementById('ankle').value) || 0,
+                goal: document.getElementById('goal').value,
+                days_per_week: totalDays,
+                experience: document.getElementById('experience').value,
+                equipment: document.getElementById('equipment').value,
+                duration: parseInt(document.getElementById('duration').value) || 60,
+                activity_level: document.getElementById('activity_level').value,
+                injuries: document.getElementById('injuries').value,
+                week_number: weekNum,
+                part: partNum
+            };
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `در حال بارگذاری برنامه هفته ${weekNum}...`;
+            document.getElementById('copyBtn').classList.add('hidden');
+            document.getElementById('nextPartBtn').classList.add('hidden');
+
+            const response = await fetch('http://127.0.0.1:8000/api/workout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userProfile)
+            });
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                rawPlanText = data.workout_plan;
+                
+                let headerTitle = `هفته ${weekNum}`;
+                if (totalDays > 3) {
+                    headerTitle += ` - بخش ${partNum}`;
+                }
+
+                resultDiv.innerHTML = `<h3>${headerTitle}</h3>` + marked.parse(rawPlanText);
+                document.getElementById('copyBtn').classList.remove('hidden');
+                
+                if (totalDays > 3 && partNum === 1) {
+                    document.getElementById('nextPartBtn').classList.remove('hidden');
+                }
+            }
+        }
+
+        function fetchNextPart() { fetchWorkout(currentWeek, 2); }
+
+        async function requestSubstitution() {
+            const exName = document.getElementById('exerciseToReplace').value.trim();
+            if (!exName) { alert("لطفاً نام حرکت را وارد کنید."); return; }
+            
+            const subDiv = document.getElementById('subResult');
+            subDiv.classList.remove('hidden');
+            subDiv.innerHTML = "<div style='color: #00f3ff; margin-bottom: 8px;'>در حال بررسی و یافتن حرکت جایگزین...</div>";
+
+            const response = await fetch('http://127.0.0.1:8000/api/substitute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    exercise_name: exName,
+                    goal: document.getElementById('goal').value,
+                    equipment: document.getElementById('equipment').value,
+                    injuries: document.getElementById('injuries').value
+                })
+            });
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                const cleanSubText = data.substitution.trim();
+                
+                // ذخیره یا آپدیت جایگزین این حرکت خاص در map
+                substitutionsMap[exName] = cleanSubText;
+
+                // بازسازی کامل نمایش و متن قابل کپی از روی کلیدهای map تا حرکات جدید اضافه و تکراری‌ها جایگزین شوند
+                let combinedHtml = "";
+                let combinedText = "";
+
+                for (const [originalEx, subText] of Object.entries(substitutionsMap)) {
+                    combinedHtml += `<div style="margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(0, 243, 255, 0.15);"><strong>جایگزین برای «${originalEx}»:</strong><br>${marked.parse(subText)}</div>`;
+                    combinedText += `\n\n[حرکت جایگزین برای "${originalEx}"]: \n` + subText;
+                }
+
+                subDiv.innerHTML = combinedHtml;
+                substitutionText = combinedText;
+                
+                document.getElementById('exerciseToReplace').value = "";
+            }
+        }
+
+        function copyWorkoutPlan() {
+            let fullTextToCopy = rawPlanText + substitutionText;
+            navigator.clipboard.writeText(fullTextToCopy).then(() => alert("برنامه به همراه تمام پیشنهادهای جایگزین با موفقیت کپی شد!"));
+        }
+
+        document.getElementById('workoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('step-3').classList.remove('active');
+            document.getElementById('step-4').classList.add('active');
+            fetchWorkout(1, 1);
+        });
+    </script>
+</body>
+</html>
